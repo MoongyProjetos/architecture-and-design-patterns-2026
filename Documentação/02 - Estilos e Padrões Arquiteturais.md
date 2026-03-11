@@ -4,194 +4,412 @@
 
 ![alt text](Diagramas/IntroducaoOOP.drawio.png)
 
+A programação orientada a objetos permite modelar **entidades do mundo real** como objetos no sistema.
 
+No contexto de uma **plataforma de delivery**, podemos ter objetos como:
 
-## MeuSeguro.Com
+* `Cliente`
+* `Restaurante`
+* `Pedido`
+* `Entregador`
+* `Pagamento`
 
-### 🏛 História e Evolução
+Cada objeto possui:
 
-A seguradora **MeuSeguro.Com** é a maior companhia de seguros de Web, com uma história que remonta a 2020. Atualmente, é líder de mercado na Europa nos ramos de Vida e Não Vida, com uma quota de mercado aproximada de 31,1%. 
-
-A companhia foi fundada em 2020, originando-se da SeguroDosOutros.com. Ao longo dos anos, passou por diversas fusões, consolidando-se como um dos maiores grupos seguradores da web. Em 2024, a **MeuSeguro.Com** foi adquirida pelo conglomerado brasileiro Zuquinha International, o que possibilitou a expansão da empresa a novos mercados.
-
-
-### 🌍 Presença Internacional
-
-A **MeuSeguro.Com** está presente em diversos países, incluindo Espanha, França, Luxemburgo, Cabo Verde, Angola, Moçambique e Macau. Em Moçambique, adquiriu a Seguradora Internacional Moçambique (SIM), operando sob a marca Ímpar.
-
-### 💼 Produtos e Serviços
-
-A empresa oferece uma ampla gama de produtos, incluindo seguros de automóvel, saúde, casa, vida, viagem, poupança e seguros para animais de estimação. Além disso, disponibiliza serviços digitais como o MyMeuSeguro, Medicina Online e MeuSeguro Drive.
-
-### 🐕 Marca e Simbolismo
-
-O nome "**MeuSeguro.Com**" reflete o compromisso da empresa com seus clientes.
-
-
-### 🌱 Responsabilidade Social
-
-A **MeuSeguro.Com** destaca-se pelo seu compromisso com a responsabilidade social e sustentabilidade. Através da iniciativa "WeCare", apoia causas sociais e ambientais, promovendo o desenvolvimento sustentável e a inclusão.
-
-
-
-![alt text](Imagens/image-1.png)
-
-
-
-## 🏛️ ***Princípios de boa arquitetura de software**
-
-
-### 🔹 **1. Coesão**
-
-**Definição**: Mede o quão bem os elementos dentro de um módulo (classe, função, componente, etc.) estão relacionados entre si.
-
-* **Alta coesão** é desejável: o módulo faz uma única coisa e faz bem.
-* **Baixa coesão** indica mistura de responsabilidades.
-
-**Exemplo**: Uma classe `RelatorioFinanceiro` que gera relatório e envia e-mails tem baixa coesão. Melhor separar.
+* **Estado** (dados)
+* **Comportamento** (métodos)
+* **Responsabilidades bem definidas**
 
 ---
 
-### 🔹 **2. Acoplamento**
+# FoodNow 🚚
 
-**Definição**: Grau de dependência entre módulos.
+*(Plataforma de Delivery Online)*
 
-* **Baixo acoplamento**: módulos independentes, fáceis de trocar ou modificar.
-* **Alto acoplamento**: alterações em um módulo quebram outros.
+## 🏛 História e Evolução
 
-**Boas práticas**:
+A **FoodNow** é uma das maiores plataformas de delivery da web, fundada em **2020** com o objetivo de conectar **clientes, restaurantes e entregadores** em uma única plataforma digital.
 
-* Usar interfaces.
-* Injeção de dependência.
-* Separar contratos (APIs) das implementações.
+Inicialmente operava apenas em uma cidade, permitindo que restaurantes locais oferecessem entrega através de um aplicativo simples. Com o crescimento da procura por entregas durante os anos seguintes, a empresa expandiu rapidamente.
 
----
+Em **2024**, a plataforma foi adquirida pelo conglomerado internacional **Zuquinha International**, permitindo a expansão para diversos países da Europa e África.
 
-### 🔹 **3. Separação de Responsabilidades (SRP – Single Responsibility Principle)**
-
-**Definição**: Cada módulo/classe deve ter **apenas uma razão para mudar**.
-
-* Ajuda na legibilidade, testabilidade e manutenção.
-* Facilita o reuso e evita efeitos colaterais indesejados.
-
-**Exemplo**: Um controller que também valida dados e acessa o banco está violando esse princípio.
+Hoje a FoodNow processa **milhões de pedidos por mês**, conectando milhares de restaurantes e entregadores.
 
 ---
 
-### 🔹 **4. Princípio Aberto/Fechado (OCP – Open/Closed Principle)**
+## 🌍 Presença Internacional
 
-* "Aberto para extensão, fechado para modificação."
-* Você deve poder **adicionar funcionalidades** sem mudar o código existente.
-* Uso comum: **polimorfismo, herança, estratégias, plugins.**
+A **FoodNow** opera atualmente em vários países:
 
----
+* Portugal
+* Espanha
+* França
+* Luxemburgo
+* Angola
+* Moçambique
+* Cabo Verde
 
-### 🔹 **5. Inversão de Dependência (DIP – Dependency Inversion Principle)**
-
-* Depender de **abstrações**, não de implementações concretas.
-* Evita acoplamento forte e melhora a flexibilidade e testabilidade.
-
-**Exemplo**: Em vez de instanciar um `MySQLRepository`, o código deve depender de `IRepository`.
-
----
-
-### 🔹 **6. Encapsulamento**
-
-* Esconder detalhes internos de implementação.
-* Expõe apenas o que é necessário (através de interfaces bem definidas).
-
-**Vantagem**: Garante controle, segurança e facilidade de manutenção.
+Cada país possui integração com **restaurantes locais, sistemas de pagamento e logística de entregadores**.
 
 ---
 
-### 🔹 **7. Princípio da Substituição de Liskov (LSP)**
+## 💼 Produtos e Serviços
 
-* Subtipos devem poder ser usados no lugar de seus tipos base **sem alterar o comportamento do sistema**.
+A plataforma oferece vários serviços digitais:
 
-**Exemplo ruim**: Uma subclasse `PatoDeBorracha` que lança exceção ao chamar `voar()` se `Pato` define `voar()` como obrigatório.
+* **Delivery de refeições**
+* **Pickup no restaurante**
+* **Agendamento de pedidos**
+* **Entrega expressa**
+* **Sistema de avaliação de restaurantes**
+* **Rastreamento do pedido em tempo real**
 
----
+Além disso, inclui funcionalidades como:
 
-### 🔹 **8. DRY (Don't Repeat Yourself)**
-
-* Evitar duplicação de lógica, regras e estruturas.
-* Centralizar conhecimento no código.
-* Facilita manutenções e mudanças futuras.
-
----
-
-### 🔹 **9. YAGNI (You Ain’t Gonna Need It)**
-
-* "Você provavelmente **não vai precisar disso**."
-* Evita superengenharia: só implementa o que é necessário agora.
+* **FoodNow Premium** (entregas grátis)
+* **FoodNow Business** (para empresas)
+* **FoodNow Market** (entrega de supermercado)
 
 ---
 
-### 🔹 **10. KISS (Keep It Simple, Stupid)**
+## 🍔 Marca e Simbolismo
 
-* A solução mais simples possível geralmente é a melhor.
-* Simplicidade é amiga da manutenibilidade.
+O nome **FoodNow** reflete a promessa principal da plataforma:
 
+> “Receber comida rapidamente, em qualquer lugar.”
 
-![alt text](Imagens/image.png)
+A marca está associada a:
 
-
-## 🏛️ **Estilos e Padrões Arquiteturais**
-
-### 📐 O que são?
-
-* **Estilos arquiteturais**: Abordagens amplas que definem como os componentes de um sistema interagem. Ex: Monolítico, Microservices, Event-Driven, Serverless.
-* **Padrões arquiteturais**: Soluções reutilizáveis para problemas recorrentes na arquitetura de software. Eles operam dentro de estilos, muitas vezes em nível mais granular. Ex: MVC, MVVM, CQRS, etc.
+* rapidez
+* conveniência
+* tecnologia
+* experiência do usuário
 
 ---
 
-## 🔁 **Padrões Arquiteturais Clássicos: MVC, MVP, MVVM**
+## 🌱 Responsabilidade Social
 
-| Padrão                          | Objetivo                                           | Quando usar                                                        | Pontos-chave                                                      |
-| ------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------- |
-| **MVC (Model-View-Controller)** | Separar responsabilidades entre UI, lógica e dados | Aplicações Web e GUI tradicionais                                  | Muito usado em frameworks como ASP.NET MVC, Ruby on Rails, Django |
-| **MVP (Model-View-Presenter)**  | Foco em testes e desacoplamento da UI              | Aplicações com forte camada de UI, como WinForms ou Android nativo | O Presenter tem controle total sobre a View                       |
-| **MVVM (Model-View-ViewModel)** | Facilita data binding e reatividade                | Apps WPF, Xamarin, MAUI, Angular, Vue.js                           | ViewModel faz a ponte entre Model e View via binding              |
+A **FoodNow** possui iniciativas de sustentabilidade, incluindo:
 
----
-
-## ⚖️ **Comparação entre os Padrões**
-
-| Aspecto       | MVC        | MVP                    | MVVM                           |
-| ------------- | ---------- | ---------------------- | ------------------------------ |
-| Acoplamento   | Médio      | Baixo                  | Muito baixo                    |
-| Testabilidade | Boa        | Excelente              | Excelente                      |
-| Data Binding  | Manual     | Manual                 | Automático (2-way)             |
-| Popularidade  | Alta (web) | Média (desktop antigo) | Alta (mobile/frontend moderno) |
+* otimização de rotas para reduzir emissões
+* incentivo ao uso de **bicicletas elétricas**
+* parceria com restaurantes para **redução de desperdício alimentar**
+* programas de apoio a pequenos restaurantes locais
 
 ---
 
-## 📌 **Discussão de Casos Reais**
+# 🏛️ Princípios de boa arquitetura de software
 
-### Caso 1: Web API com Frontend React
-
-* **Backend:** MVC com ASP.NET Core → separa Controllers, Models e Views (embora as views sejam APIs)
-* **Frontend:** MVVM com React (hooks + estados como ViewModel, componentes como View)
-* **Benefício:** Separação de responsabilidades, fácil manutenção
-
-### Caso 2: Aplicativo Mobile com Xamarin/Maui
-
-* Utiliza **MVVM** para aproveitar bindings e facilitar testes.
-* ViewModel consome serviços REST e atualiza View automaticamente.
-
-### Caso 3: Sistema legado em WinForms
-
-* Reescrito para usar **MVP**, melhorando a testabilidade da UI
-* Presenter foi usado para simular comportamento da View em testes unitários.
+Esses princípios ajudam a construir sistemas **escaláveis, fáceis de manter e evoluir**, especialmente em plataformas complexas como um sistema de delivery.
 
 ---
 
-## 🧠 Dica prática
+## 🔹 1. Coesão
 
-* **MVVM** brilha onde há data binding e reatividade (mobile/frontend).
-* **MVC** ainda é padrão sólido pra APIs e apps web server-side.
-* **MVP** funciona bem em aplicações mais antigas ou com UIs complexas, onde você quer isolar a lógica de apresentação.
+**Definição:** Mede o quão bem os elementos dentro de um módulo estão relacionados entre si.
+
+Alta coesão significa que um componente tem **uma responsabilidade clara**.
+
+### Exemplo
+
+Uma classe `DeliveryPriceCalculator` deveria **apenas calcular o valor da entrega**.
+
+Se ela também:
+
+* envia notificações
+* atualiza estado do pedido
+* grava logs
+
+então possui **baixa coesão**.
+
+---
+
+## 🔹 2. Acoplamento
+
+**Definição:** Grau de dependência entre módulos.
+
+Em uma plataforma de delivery existem vários componentes:
+
+* gestão de pedidos
+* pagamentos
+* notificações
+* logística
+
+Se o módulo de **Pedidos** depende diretamente do módulo de **Pagamentos**, qualquer mudança pode quebrar o sistema.
+
+### Boas práticas
+
+* usar interfaces
+* usar injeção de dependência
+* separar contratos e implementações
+
+---
+
+## 🔹 3. Separação de Responsabilidades (SRP)
+
+Cada classe deve ter **uma única responsabilidade**.
+
+### Exemplo ruim
+
+Um `OrderController` que:
+
+* cria pedidos
+* calcula preço
+* processa pagamento
+* envia notificações
+
+### Melhor abordagem
+
+Separar em serviços:
+
+* `OrderService`
+* `PaymentService`
+* `NotificationService`
+* `DeliveryService`
+
+---
+
+## 🔹 4. Princípio Aberto/Fechado (OCP)
+
+Um sistema deve estar **aberto para extensão e fechado para modificação**.
+
+### Exemplo
+
+Imagine que o sistema suporta diferentes tipos de entrega:
+
+* bicicleta
+* carro
+* drone
+
+Ao invés de alterar código existente, podemos adicionar novas estratégias de cálculo de entrega usando **Strategy Pattern**.
+
+---
+
+## 🔹 5. Inversão de Dependência (DIP)
+
+Módulos de alto nível não devem depender de implementações concretas.
+
+### Exemplo
+
+Em vez de:
+
+```csharp
+var payment = new StripePayment();
+```
+
+o sistema deve depender de uma abstração:
+
+```csharp
+IPaymentService
+```
+
+Assim podemos trocar facilmente:
+
+* Stripe
+* PayPal
+* MBWay
+* Apple Pay
+
+---
+
+## 🔹 6. Encapsulamento
+
+Cada objeto deve esconder sua implementação interna.
+
+### Exemplo
+
+O objeto `Order` pode controlar suas mudanças de estado:
+
+```text
+Created → Preparing → Ready → Delivering → Delivered
+```
+
+Outras partes do sistema não devem manipular diretamente esses estados.
+
+---
+
+## 🔹 7. Princípio da Substituição de Liskov
+
+Subtipos devem poder substituir o tipo base sem quebrar o comportamento.
+
+### Exemplo
+
+Se temos:
+
+```
+DeliveryVehicle
+```
+
+Podemos ter:
+
+```
+Bike
+Car
+Scooter
+```
+
+Todos devem funcionar corretamente quando usados como `DeliveryVehicle`.
+
+---
+
+## 🔹 8. DRY (Don't Repeat Yourself)
+
+Evitar duplicação de lógica.
+
+### Exemplo
+
+Se vários módulos calculam a taxa de entrega:
+
+* OrderService
+* CheckoutService
+* DeliveryService
+
+Isso gera inconsistência.
+
+A solução é centralizar essa lógica em:
+
+```
+DeliveryPricingService
+```
+
+---
+
+## 🔹 9. YAGNI (You Ain’t Gonna Need It)
+
+Evitar implementar funcionalidades antes de serem necessárias.
+
+Exemplo:
+
+Criar suporte a **entrega por drones** antes de existir essa operação real.
+
+---
+
+## 🔹 10. KISS (Keep It Simple)
+
+Soluções simples são mais fáceis de manter.
+
+Em um sistema de delivery, uma solução simples pode ser:
+
+* serviços claros
+* APIs bem definidas
+* responsabilidades separadas
+
+---
+
+# 🏛️ Estilos e Padrões Arquiteturais
+
+## 📐 O que são?
+
+### Estilos arquiteturais
+
+Definem **a organização geral do sistema**.
+
+Exemplos:
+
+* Monolítico
+* Microservices
+* Event-Driven
+* Serverless
+
+---
+
+### Padrões arquiteturais
+
+São **soluções reutilizáveis para problemas comuns na arquitetura**.
+
+Exemplos:
+
+* MVC
+* MVP
+* MVVM
+* CQRS
+
+---
+
+# 🔁 Padrões Arquiteturais Clássicos
+
+| Padrão | Objetivo                   | Quando usar        | Exemplo na FoodNow    |
+| ------ | -------------------------- | ------------------ | --------------------- |
+| MVC    | Separar UI, lógica e dados | aplicações web     | API de pedidos        |
+| MVP    | Desacoplar UI              | aplicações desktop | painel administrativo |
+| MVVM   | Data binding               | mobile apps        | aplicativo do cliente |
+
+---
+
+# ⚖️ Comparação entre os padrões
+
+| Aspecto       | MVC    | MVP       | MVVM              |
+| ------------- | ------ | --------- | ----------------- |
+| Acoplamento   | Médio  | Baixo     | Muito baixo       |
+| Testabilidade | Boa    | Excelente | Excelente         |
+| Data Binding  | Manual | Manual    | Automático        |
+| Uso comum     | Web    | Desktop   | Mobile / Frontend |
+
+---
+
+# 📌 Discussão de Casos Reais
+
+## Caso 1 — Web API de pedidos
+
+Backend em **ASP.NET Core** usando MVC.
+
+Responsabilidades:
+
+* `OrderController`
+* `OrderService`
+* `OrderRepository`
+
+Benefícios:
+
+* separação clara de responsabilidades
+* fácil manutenção
+* integração simples com apps mobile
+
+---
+
+## Caso 2 — Aplicativo Mobile do cliente
+
+Aplicativo mobile que permite:
+
+* buscar restaurantes
+* fazer pedidos
+* acompanhar entrega
+
+Arquitetura:
+
+**MVVM**
+
+* **View:** telas do aplicativo
+* **ViewModel:** lógica da interface
+* **Model:** pedidos, restaurantes, pagamentos
+
+---
+
+## Caso 3 — Painel de gestão de restaurantes
+
+Interface usada por restaurantes para:
+
+* aceitar pedidos
+* atualizar status
+* gerenciar cardápio
+
+Arquitetura:
+
+**MVP**
+
+O Presenter controla a lógica da interface e comunica com os serviços do backend.
+
+---
+
+# 🧠 Dica prática
+
+No contexto de uma plataforma de delivery:
+
+* **MVC** é ideal para APIs backend
+* **MVVM** funciona muito bem para apps mobile
+* **MVP** pode ser útil em interfaces administrativas
 
 
 ---
-> © MoOngy 2025 | Este repositório é parte do programa de formação contínua em Engenharia de Software.
+> © MoOngy 2026 | Este repositório é parte do programa de formação contínua em Engenharia de Software.
