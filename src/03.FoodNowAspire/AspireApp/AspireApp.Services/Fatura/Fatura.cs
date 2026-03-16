@@ -22,8 +22,6 @@ public class Fatura
     {
         entrega.EfetuarEntrega();
     }
-
-
 }
 
 
