@@ -1,5 +1,4 @@
-namespace AspireApp.Services.Fatura;
-
+namespace AspireApp.Services.Pagamento;
 public class PagamentoMBWay : PagamentoFactoryMethod
 {
     public override void Processar(){

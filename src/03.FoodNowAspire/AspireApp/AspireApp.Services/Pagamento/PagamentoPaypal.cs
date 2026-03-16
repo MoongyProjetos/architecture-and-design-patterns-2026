@@ -1,4 +1,4 @@
-namespace AspireApp.Services.Fatura;
+namespace AspireApp.Services.Pagamento;
 
 public class PagamentoPaypal : PagamentoFactoryMethod
 {

@@ -8,13 +8,18 @@ namespace AspireApp.Services;
 /// </summary>
 public class LoggerSingleton
 {
-    private readonly LoggerSingleton _loggerSingleton;
+    private LoggerSingleton _loggerSingleton;
+
     public LoggerSingleton()
-    {        
+    {
         if(_loggerSingleton == null)
         {
             _loggerSingleton = new LoggerSingleton();
         }
+    }
+
+    public LoggerSingleton ObterLoggerSingleton()
+    {
         return _loggerSingleton;
     }
 }

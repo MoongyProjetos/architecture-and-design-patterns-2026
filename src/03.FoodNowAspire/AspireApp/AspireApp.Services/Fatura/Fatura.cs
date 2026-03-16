@@ -1,6 +1,8 @@
 ﻿namespace AspireApp.Services.Fatura;
 
 using AspireApp.Services.Desconto;
+using AspireApp.Services.Pagamento;
+using AspireApp.Services.Entrega;
 
 public class Fatura
 {
@@ -15,5 +17,13 @@ public class Fatura
         pagamento.Processar();
     }
 
+    //TODO: Local Temporario para o Método de Entrega. Verificar onde colocar isso.
+    public void EfetuarEntrega(EntregaAbstractFactory entrega)
+    {
+        entrega.EfetuarEntrega();
+    }
+
+
 }
+
 
