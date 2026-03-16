@@ -1,4 +1,4 @@
-namespace AspireApp.Services;
+namespace AspireApp.Services.Fatura;
 
 public static class ImpressaoFatura
 {
