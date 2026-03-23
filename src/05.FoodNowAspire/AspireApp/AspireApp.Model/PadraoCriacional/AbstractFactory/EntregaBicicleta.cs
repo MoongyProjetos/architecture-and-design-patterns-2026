@@ -1,4 +1,4 @@
-namespace  AspireApp.Services.Entrega; 
+namespace AspireApp.Model.PadraoCriacional.AbstractFactory; 
 
 public class EntregaBicicleta : EntregaAbstractFactory
 {

@@ -1,4 +1,3 @@
-using System.Reflection;
 using AspireApp.Model.PadraoCriacional.Prototype;
 
 
@@ -28,7 +27,7 @@ public class PrototypeTests
 
         Assert.Equal("Expressa", novoPedido.TipoEntrega);
         Assert.Equal("Pizza Place", novoPedido.Restaurante);
-        Assert.Single(2, novoPedido.Itens.Count());
+        Assert.Equal(2, novoPedido.Itens.Count());
 
         //Cuidado, não devo usar testes com duas variantes assim        
         Assert.Equal(pedidoAnterior.Restaurante, novoPedido.Restaurante);

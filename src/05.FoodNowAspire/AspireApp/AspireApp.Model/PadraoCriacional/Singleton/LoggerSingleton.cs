@@ -1,4 +1,4 @@
-namespace AspireApp.Services;
+namespace AspireApp.Model.PadraoCriacional.Singleton;
 
 /// <summary>
 /// Exemplo implementacao Singleton: Classe Highlander - Só pode haver 1 objeto em memória
@@ -12,7 +12,7 @@ public class LoggerSingleton
 
     public LoggerSingleton()
     {
-        if(_loggerSingleton == null)
+        if (_loggerSingleton == null)
         {
             _loggerSingleton = new LoggerSingleton();
         }

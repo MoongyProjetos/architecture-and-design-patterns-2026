@@ -1,4 +1,4 @@
-namespace AspireApp.Services.Desconto;
+namespace AspireApp.Model.PadraoCriacional.Strategy;
 public class ClientePremiumStrategy : IDescontoStrategy
 {
     public decimal AplicarDesconto(decimal amount)

@@ -1,4 +1,4 @@
-namespace AspireApp.Services.Pagamento;
+namespace AspireApp.Model.PadraoCriacional.FactoryMethod;
 
 
 /// <summary>
