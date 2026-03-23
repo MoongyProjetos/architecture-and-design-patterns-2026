@@ -15,7 +15,8 @@
 | 0–10 min    | Introdução aos Padrões Criacionais               |
 | 10–45 min   | Padrão Builder – Conceito, Exemplo e Exercício   |
 | 45–80 min   | Padrão Prototype – Conceito, Exemplo e Exercício |
-| 80–110 min  | Análise de trade-offs e comparações práticas     |
+| 80-95 min   | https://forms.gle/NjfLc5s3r1SnaGVh9              |
+| 95–110 min  | Análise de trade-offs e comparações práticas     |
 | 110–120 min | Encerramento, dúvidas e insights                 |
 
 ---
