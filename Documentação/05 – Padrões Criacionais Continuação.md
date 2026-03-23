@@ -35,6 +35,7 @@ Sem padrões, acabamos com código assim:
 
 ```csharp
 var order = new Order(a, b, c, d, e, f, g, h...);
+```
 
 👉 Difícil de ler
 👉 Difícil de manter
@@ -257,6 +258,7 @@ class Person : IPrototype<Person> {
     public Person Clone() => (Person)this.MemberwiseClone();
 }
 ```
+Diagrama:
 
 ```mermaid
 classDiagram
