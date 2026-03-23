@@ -27,12 +27,41 @@
 * Padrões criacionais tratam da **instanciação de objetos**, encapsulando o processo de criação.
 * Objetivo: **reduzir o acoplamento** entre o sistema e a forma como objetos são criados.
 
+---
+
+## 🔥 A dor real (por que isso existe?)
+
+Sem padrões, acabamos com código assim:
+
+```csharp
+var order = new Order(a, b, c, d, e, f, g, h...);
+
+👉 Difícil de ler
+👉 Difícil de manter
+👉 Fácil de quebrar
+
+
 **Padrões mais comuns:**
 
-* Singleton, Factory Method, Abstract Factory, Builder, Prototype
+* Singleton
+* Factory Method
+* Abstract Factory
+* Builder
+* Prototype
+
+### Revisão rápida:
+
+| Padrão               | Descrição rápida            |
+| -------------------- | --------------------------- |
+| **Singleton**        | Uma única instância global  |
+| **Factory Method**   | Subclasses decidem o objeto |
+| **Abstract Factory** | Famílias de objetos         |
+| **Builder**          | Construção passo a passo    |
+| **Prototype**        | Clonagem de objetos         |
+| **Object Pool**      | Reutilização de instâncias  |
 
 
-### Revisão:
+### Revisão expandida:
 
 | Padrão               | Descrição rápida                                                                                                                                                                                              |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -67,7 +96,7 @@
 | **Exemplo aplicado**            | Criar apólice individual: Auto ou Vida | Criar conjunto completo de apólices (Auto + Vida) para PF ou PJ |
 | **Escopo de criação**           | Um tipo de apólice por vez             | Conjunto de produtos relacionados                               |
 | **Flexibilidade de combinação** | Limitada – uma apólice por fábrica     | Alta – combinação de múltiplos produtos em família              |
-| **Consistência entre produtos** | Não garantida                          | Garantida (ex: todos produtos compatíveis com PF ou PJ)         |
+| **Consistência entre produtos** | Não garantida                          | Garantida (ex: todos produtos compatíveis com Pessoa Coletiva ou Pessoa Singular)         |
 
 
 
@@ -78,9 +107,18 @@
 ### 📘 Conceito:
 
 * Separação da construção de um objeto complexo da sua representação.
-* Permite criar diferentes representações de um objeto usando o mesmo processo de construção.
+* Permite criar diferentes versões do mesmo objeto..
 
-### 🧪 Exemplo prático (C#):
+
+#### 🔥 Problema real
+
+Construtores com muitos parâmetros:
+
+```csharp
+    new Order(cliente, itens, endereco, cupom, tipoEntrega, pagamento...);
+```
+
+### 🍔 Exemplo simples (didático):
 
 ```csharp
 // Produto final
@@ -100,8 +138,12 @@ interface ISandwichBuilder {
     void SetSalad();
     Sandwich GetResult();
 }
+```
 
-// Concrete Builder
+#### Versão antiga, usando Director
+
+```csharp
+// Concrete Builder versão antiga
 class VeganSandwichBuilder : ISandwichBuilder {
     private Sandwich _sandwich = new Sandwich();
     public void SetBread() => _sandwich.Bread = "Integral";
@@ -119,6 +161,24 @@ class SandwichDirector {
     }
 }
 ```
+
+#### Builder Moderno (Fluent API)
+```csharp
+var sandwich = new SandwichBuilder()
+    .WithBread("Integral")
+    .WithProtein("Tofu")
+    .WithSalad("Alface")
+    .Build();
+
+var order = new OrderBuilder()
+    .ForCustomer("João")
+    .FromRestaurant("Pizza Place")
+    .AddItem("Pizza Margherita")
+    .WithDelivery("Express")
+    .WithCoupon("FOOD10")
+    .Build();
+```
+
 
 ```mermaid
 classDiagram
@@ -159,6 +219,9 @@ classDiagram
 
 * Modularidade na construção de objetos.
 * Facilita a criação de representações diferentes de um mesmo objeto.
+* Código mais legível
+* Construção flexível
+* Evita construtores gigantes
 
 ### ❗ Desvantagens:
 
@@ -167,7 +230,9 @@ classDiagram
 
 ### 👨‍🏫 Atividade:
 
-> Crie um Builder para montar um computador (CPU, GPU, RAM, SSD), com pelo menos 2 tipos de configuração (ex: gamer e escritório).
+> Criar:
+> 1. Builder para pedido do FoodNow
+> 2. Builder para apólice
 
 ---
 
@@ -209,6 +274,15 @@ classDiagram
     IPrototype <|.. Person
 ```
 
+🚚 Exemplo — FoodNow
+
+```csharp
+var newOrder = lastOrder.Clone();
+
+var apoliceNova = apolicePadrao.Clone();
+```
+
+
 ### 💡 Vantagens:
 
 * Reduz custo de criação de objetos complexos.
@@ -221,7 +295,9 @@ classDiagram
 
 ### 👨‍🏫 Atividade:
 
-> Modele um sistema de cadastro com templates de contratos clonáveis (ex: "Contrato Padrão", "Contrato Premium") que pode ser personalizado depois.
+> Clonar:
+> 1. Pedido FoodNow
+> 2. Apolice
 
 ---
 
@@ -243,6 +319,24 @@ classDiagram
 * **Prototype**: Jogos (clonar inimigos), documentos com templates, IA (clonagem de agentes).
 
 ---
+
+### Object Pool (Bônus)
+
+📘 Conceito
+
+Reutilizar objetos ao invés de recriar.
+
+⚠️ Cuidados
+Thread safety
+Não usar para objetos leves
+🚚 FoodNow
+Pool de conexões de pagamento
+📚 6. Encerramento
+✔️ Recapitulando
+Builder → construção
+Prototype → clonagem
+Object Pool → reutilização
+
 
 ## 📚 **5. Encerramento e Dúvidas (10 min)**
 
