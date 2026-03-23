@@ -317,6 +317,225 @@ Object Pool → reutilização
 ### 6. Adaptando os exemplos ao caso de uso do FoodNow
 
 <details>
+<summary>Exemplos FoodNow</summary>
+
+## 🏗️ **Builder – Montagem personalizada de Pedido**
+
+### 📘 Cenário
+
+Na plataforma **FoodNow**, o cliente pode montar um pedido com várias opções:
+
+- itens do restaurante  
+- tipo de entrega (normal, expressa)  
+- cupons de desconto  
+- observações (ex: “sem cebola”)  
+
+---
+
+### 🎯 Objetivo
+
+Permitir construir um **Pedido** passo a passo com diferentes combinações.
+
+---
+
+### ✅ Exemplo em C#
+
+```csharp
+// Produto final
+class Pedido {
+    public string Cliente { get; set; }
+    public string Restaurante { get; set; }
+    public List<string> Itens { get; set; } = new();
+    public string TipoEntrega { get; set; }
+    public string Cupom { get; set; }
+
+    public override string ToString() {
+        return $"{Cliente} pediu {string.Join(", ", Itens)} de {Restaurante} " +
+               $"(Entrega: {TipoEntrega}, Cupom: {Cupom})";
+    }
+}
+
+// Builder
+interface IPedidoBuilder {
+    void DefinirCliente(string cliente);
+    void DefinirRestaurante(string restaurante);
+    void AdicionarItem(string item);
+    void DefinirEntrega(string tipo);
+    void AplicarCupom(string cupom);
+    Pedido Construir();
+}
+
+// Implementação concreta
+class PedidoBuilder : IPedidoBuilder {
+    private Pedido _pedido = new Pedido();
+
+    public void DefinirCliente(string cliente) => _pedido.Cliente = cliente;
+    public void DefinirRestaurante(string restaurante) => _pedido.Restaurante = restaurante;
+    public void AdicionarItem(string item) => _pedido.Itens.Add(item);
+    public void DefinirEntrega(string tipo) => _pedido.TipoEntrega = tipo;
+    public void AplicarCupom(string cupom) => _pedido.Cupom = cupom;
+
+    public Pedido Construir() => _pedido;
+}
+
+// Diretor
+class GeradorPedido {
+    public Pedido CriarPedidoSimples(IPedidoBuilder builder) {
+        builder.DefinirCliente("João");
+        builder.DefinirRestaurante("Pizza Place");
+        builder.AdicionarItem("Pizza Margherita");
+        builder.DefinirEntrega("Normal");
+        return builder.Construir();
+    }
+
+    public Pedido CriarPedidoCompleto(IPedidoBuilder builder) {
+        builder.DefinirCliente("João");
+        builder.DefinirRestaurante("Pizza Place");
+        builder.AdicionarItem("Pizza Margherita");
+        builder.AdicionarItem("Refrigerante");
+        builder.DefinirEntrega("Expressa");
+        builder.AplicarCupom("FOOD10");
+        return builder.Construir();
+    }
+}
+````
+
+---
+
+```mermaid
+classDiagram
+    class Pedido {
+        - string Cliente
+        - string Restaurante
+        - List~string~ Itens
+        - string TipoEntrega
+        - string Cupom
+        + ToString()
+    }
+
+    class IPedidoBuilder {
+        <<interface>>
+        + DefinirCliente(string)
+        + DefinirRestaurante(string)
+        + AdicionarItem(string)
+        + DefinirEntrega(string)
+        + AplicarCupom(string)
+        + Construir() Pedido
+    }
+
+    class PedidoBuilder {
+        - Pedido _pedido
+        + DefinirCliente(string)
+        + DefinirRestaurante(string)
+        + AdicionarItem(string)
+        + DefinirEntrega(string)
+        + AplicarCupom(string)
+        + Construir() Pedido
+    }
+
+    class GeradorPedido {
+        + CriarPedidoSimples(IPedidoBuilder)
+        + CriarPedidoCompleto(IPedidoBuilder)
+    }
+
+    IPedidoBuilder <|.. PedidoBuilder
+    PedidoBuilder --> Pedido
+    GeradorPedido --> IPedidoBuilder
+```
+
+---
+
+## 🧬 **Prototype – Clonagem de Pedido (Repetir Pedido)**
+
+### 📘 Cenário
+
+No FoodNow, o cliente pode clicar em:
+
+👉 **“Repetir pedido”**
+
+---
+
+### 🎯 Objetivo
+
+Evitar recriar pedidos do zero — **clonar e ajustar rapidamente**.
+
+---
+
+### ✅ Exemplo em C#
+
+```csharp
+// Interface Prototype
+interface IPedidoPrototype {
+    Pedido Clone();
+}
+
+// Classe concreta
+class Pedido : IPedidoPrototype {
+    public string Restaurante { get; set; }
+    public List<string> Itens { get; set; }
+    public string TipoEntrega { get; set; }
+
+    public Pedido Clone() {
+        return new Pedido {
+            Restaurante = this.Restaurante,
+            Itens = new List<string>(this.Itens), // Deep copy da lista
+            TipoEntrega = this.TipoEntrega
+        };
+    }
+}
+```
+
+---
+
+### 🧪 Uso prático
+
+```csharp
+// Pedido anterior
+var pedidoAnterior = new Pedido {
+    Restaurante = "Pizza Place",
+    Itens = new List<string> { "Pizza", "Refrigerante" },
+    TipoEntrega = "Normal"
+};
+
+// Cliente repete o pedido
+var novoPedido = pedidoAnterior.Clone();
+novoPedido.TipoEntrega = "Expressa"; // customização
+
+Console.WriteLine($"Novo pedido: {novoPedido.Restaurante}");
+```
+
+---
+
+```mermaid
+classDiagram
+    class IPedidoPrototype {
+        <<interface>>
+        + Clone() Pedido
+    }
+
+    class Pedido {
+        - string Restaurante
+        - List~string~ Itens
+        - string TipoEntrega
+        + Clone() Pedido
+    }
+
+    IPedidoPrototype <|.. Pedido
+```
+
+---
+
+## 🧠 Quando usar no FoodNow?
+
+| Padrão        | Quando usar                                                     |
+| ------------- | --------------------------------------------------------------- |
+| **Builder**   | Quando o cliente monta o pedido passo a passo com várias opções |
+| **Prototype** | Quando o cliente deseja repetir pedidos anteriores rapidamente  |
+
+</details>
+
+
+<details>
 <summary>Exemplos Seguradora</summary>
 
 #### 🏗️ **Builder – Montagem personalizada de Apólice**
@@ -511,6 +730,8 @@ classDiagram
 * https://sourcemaking.com/design_patterns/creational_patterns
 
 
+<details>
+<summary>Bônus - Object Pool</summary>
 
 ### 8. Bônus - Object Pool
 
@@ -690,6 +911,7 @@ Essa imagem, embora represente uma **estrutura de dados stack**, serve bem como 
 * Operações de `pop` representam **obter objetos do pool**.
 * Isso ajuda a **otimizar o desempenho**, especialmente em sistemas com alta demanda de instanciamento de objetos.
 
+</details>
 
 ---
   > © MoOngy 2026 | Este repositório é parte do programa de formação contínua em Engenharia de Software.

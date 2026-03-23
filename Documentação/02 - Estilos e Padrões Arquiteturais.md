@@ -2,7 +2,6 @@
 
 ## Introdução à programação orientada a objetos
 
-![alt text](Diagramas/IntroducaoOOP.drawio.png)
 
 A programação orientada a objetos permite modelar **entidades do mundo real** como objetos no sistema.
 
