@@ -1,8 +1,6 @@
 namespace AspireApp.Tests.PadraoCriacional;
 
-using System.Reflection;
 using AspireApp.Model.PadraoCriacional.Builder;
-
 public class BuilderTests
 {
     [Fact]
@@ -16,7 +14,7 @@ public class BuilderTests
         Pedido pedido = diretor.CriarPedidoSimples(pedidoBuilder); 
     
         // Then
-        Assert.Equal(1, pedido.Itens.Count());
+        Assert.Single(pedido.Itens);
         Assert.Equal("João", pedido.Cliente);
         Assert.Null(pedido.Cupom);  
     }
