@@ -630,4 +630,4 @@ Essa imagem, embora represente uma **estrutura de dados stack**, serve bem como 
 
 
 ---
-> © MoOngy 2025 | Este repositório é parte do programa de formação contínua em Engenharia de Software.
+  > © MoOngy 2026 | Este repositório é parte do programa de formação contínua em Engenharia de Software.

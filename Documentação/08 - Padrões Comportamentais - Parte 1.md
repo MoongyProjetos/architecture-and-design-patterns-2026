@@ -748,4 +748,4 @@ Esses exemplos demonstram como **padrões de projeto podem ser aplicados diretam
 
 
 ---
-> © MoOngy 2025 | Este repositório é parte do programa de formação contínua em Engenharia de Software.
+  > © MoOngy 2026 | Este repositório é parte do programa de formação contínua em Engenharia de Software.
