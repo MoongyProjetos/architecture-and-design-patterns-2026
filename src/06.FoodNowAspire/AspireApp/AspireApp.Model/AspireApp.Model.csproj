@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="XDoc.PDF" Version="12.5.2" />
+    <PackageReference Include="XDoc.Word" Version="12.5.2" />
+  </ItemGroup>
+
 </Project>
