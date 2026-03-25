@@ -23,9 +23,9 @@ public class RestauranteAdapter : IRestauranteService {
 
         var restauranteDetalhe = new RestauranteDetalhe
         {
-            Id = restauranteApiDto.Id.ToString(),
-            Nome = restauranteApiDto.Name,
-            Endereco = $"{restauranteApiDto.Address}, Telefone: {restauranteApiDto.PhoneNumber}" 
+            Id = restauranteApiDto?.Id.ToString(),
+            Nome = restauranteApiDto?.Name,
+            Endereco = $"{restauranteApiDto?.Address}, Telefone: {restauranteApiDto?.PhoneNumber}" 
         };
 
         return restauranteDetalhe;

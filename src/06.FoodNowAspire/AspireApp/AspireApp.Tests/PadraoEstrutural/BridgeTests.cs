@@ -8,7 +8,12 @@ public class BridgeTests
     {
         IGeradorRelatorio formato = new GeradorPdf();
         CompraRestauranteRelatorio relatorio = new CompraRestauranteRelatorio(formato);
-        relatorio.Gerar();
+
+        // Act
+        var exception = Record.Exception(relatorio.Gerar);
+
+        // Assert
+        Assert.Null(exception);
     }
 
 
@@ -17,7 +22,12 @@ public class BridgeTests
     {
         IGeradorRelatorio formato = new GeradorWord();
         CompraRestauranteRelatorio relatorio = new CompraRestauranteRelatorio(formato);
-        relatorio.Gerar();
+
+        // Act
+        var exception = Record.Exception(relatorio.Gerar);
+
+        // Assert
+        Assert.Null(exception);
     }
 
 
@@ -26,6 +36,29 @@ public class BridgeTests
     {
         IGeradorRelatorio formato = new GeradorTxt();
         CompraRestauranteRelatorio relatorio = new CompraRestauranteRelatorio(formato);
-        relatorio.Gerar();
+
+        // Act
+        var exception = Record.Exception(relatorio.Gerar);
+
+        // Assert
+        Assert.Null(exception);
+    }
+
+
+    [Theory]
+    [InlineData(typeof(GeradorPdf))]
+    [InlineData(typeof(GeradorWord))]
+    [InlineData(typeof(GeradorTxt))]
+    public void DeveSerCapazDeGerarUmRelatorioEmDiferentesFormatos(Type tipoGerador)
+    {
+        // Arrange
+        IGeradorRelatorio formato = (IGeradorRelatorio)Activator.CreateInstance(tipoGerador)!;
+        var relatorio = new CompraRestauranteRelatorio(formato);
+
+        // Act
+        var exception = Record.Exception(relatorio.Gerar);
+
+        // Assert
+        Assert.Null(exception);
     }
 }
