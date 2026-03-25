@@ -715,6 +715,8 @@ Esse exemplo mostra a **separação dos dados** em `PersonData`, protegendo os a
 
 https://sourcemaking.com/design_patterns/private_class_data 
 
+<details>
+<summary> Exemplos Seguradora </summary>
 
 ## Seguradora 
 
@@ -996,6 +998,329 @@ classDiagram
 
 
 👉 **Uso real**: garantir **imutabilidade**, **encapsulamento forte** e proteger dados sensíveis contra alterações externas.
+</details>
+
+
+<details>
+<summary> Exemplo FoodNow </summary>
+
+## 🍔 FoodNow
+
+Aqui estão exemplos dos padrões estruturais **Adapter**, **Bridge**, **Composite** e **Private Class Data**, adaptados para o contexto da plataforma de delivery **FoodNow**.
+
+---
+
+## 🧩 1. Adapter – Integração com sistema externo de restaurantes
+
+### 🧠 Contexto
+
+O FoodNow integra com APIs de restaurantes parceiros, mas cada restaurante pode ter um formato diferente de resposta.
+
+O sistema interno espera uma interface padrão `IRestaurantService`.
+
+---
+
+### 🧱 Exemplo
+
+```csharp
+// Interface padrão do sistema
+public interface IRestaurantService {
+    RestaurantDetails GetRestaurant(string id);
+}
+
+// API externa (formato diferente)
+public class ExternalRestaurantApi {
+    public string FetchRestaurantData(string id) {
+        return "{ \"name\": \"Pizza Place\" }";
+    }
+}
+
+// Adapter
+public class RestaurantAdapter : IRestaurantService {
+    private readonly ExternalRestaurantApi _api;
+
+    public RestaurantAdapter(ExternalRestaurantApi api) {
+        _api = api;
+    }
+
+    public RestaurantDetails GetRestaurant(string id) {
+        var json = _api.FetchRestaurantData(id);
+        return JsonSerializer.Deserialize<RestaurantDetails>(json);
+    }
+}
+````
+
+---
+
+```mermaid
+classDiagram
+    class IRestaurantService {
+        +GetRestaurant(string id) RestaurantDetails
+    }
+
+    class ExternalRestaurantApi {
+        +FetchRestaurantData(string id) string
+    }
+
+    class RestaurantAdapter {
+        -ExternalRestaurantApi _api
+        +GetRestaurant(string id) RestaurantDetails
+    }
+
+    IRestaurantService <|.. RestaurantAdapter
+    RestaurantAdapter --> ExternalRestaurantApi
+```
+
+👉 **Uso real**: integração com APIs externas de restaurantes, pagamentos ou logística.
+
+---
+
+## 🌉 2. Bridge – Relatórios de pedidos em múltiplos formatos
+
+### 🧠 Contexto
+
+O FoodNow gera relatórios de pedidos (ex: por restaurante, por região, por período), que podem ser exportados em diferentes formatos (PDF, CSV, JSON).
+
+---
+
+### 🧱 Exemplo
+
+```csharp
+// Implementor
+public interface IReportExporter {
+    void Export(string content);
+}
+
+// Implementações
+public class PdfExporter : IReportExporter {
+    public void Export(string content) =>
+        Console.WriteLine($"Exportando PDF: {content}");
+}
+
+public class CsvExporter : IReportExporter {
+    public void Export(string content) =>
+        Console.WriteLine($"Exportando CSV: {content}");
+}
+
+// Abstraction
+public abstract class OrderReport {
+    protected IReportExporter _exporter;
+
+    protected OrderReport(IReportExporter exporter) {
+        _exporter = exporter;
+    }
+
+    public abstract void Generate();
+}
+
+// Refined Abstraction
+public class RestaurantOrderReport : OrderReport {
+    public RestaurantOrderReport(IReportExporter exporter)
+        : base(exporter) { }
+
+    public override void Generate() {
+        var content = "Relatório de pedidos por restaurante";
+        _exporter.Export(content);
+    }
+}
+```
+
+---
+
+```mermaid
+classDiagram
+    class IReportExporter {
+        +Export(string content)
+    }
+
+    class PdfExporter
+    class CsvExporter
+
+    class OrderReport {
+        #IReportExporter _exporter
+        +Generate()
+    }
+
+    class RestaurantOrderReport {
+        +Generate()
+    }
+
+    IReportExporter <|.. PdfExporter
+    IReportExporter <|.. CsvExporter
+    OrderReport <|-- RestaurantOrderReport
+    OrderReport --> IReportExporter
+```
+
+👉 **Uso real**: relatórios administrativos, dashboards e exportação de dados.
+
+---
+
+## 🌲 3. Composite – Estrutura de itens de um pedido
+
+### 🧠 Contexto
+
+Um pedido no FoodNow pode conter:
+
+* itens individuais
+* combos (ex: menu com bebida + acompanhamento)
+
+Ou seja, temos uma estrutura hierárquica.
+
+---
+
+### 🧱 Exemplo
+
+```csharp
+// Component
+public abstract class OrderItem {
+    public abstract decimal GetPrice();
+}
+
+// Leaf
+public class SimpleItem : OrderItem {
+    private readonly decimal _price;
+
+    public SimpleItem(decimal price) {
+        _price = price;
+    }
+
+    public override decimal GetPrice() => _price;
+}
+
+// Composite
+public class ComboItem : OrderItem {
+    private readonly List<OrderItem> _items = new();
+
+    public void Add(OrderItem item) => _items.Add(item);
+
+    public override decimal GetPrice() =>
+        _items.Sum(i => i.GetPrice());
+}
+```
+
+---
+
+```csharp
+// Uso
+var combo = new ComboItem();
+combo.Add(new SimpleItem(10)); // burger
+combo.Add(new SimpleItem(5));  // drink
+
+Console.WriteLine($"Total: {combo.GetPrice()}"); // 15
+```
+
+---
+
+```mermaid
+classDiagram
+    class OrderItem {
+        +GetPrice() decimal
+    }
+
+    class SimpleItem {
+        +GetPrice() decimal
+    }
+
+    class ComboItem {
+        -List~OrderItem~ _items
+        +Add(OrderItem)
+        +GetPrice() decimal
+    }
+
+    OrderItem <|-- SimpleItem
+    OrderItem <|-- ComboItem
+    ComboItem --> OrderItem
+```
+
+👉 **Uso real**: pedidos com combos, menus e agrupamentos de itens.
+
+---
+
+## 🔐 4. Private Class Data – Proteção de dados do pedido
+
+### 🧠 Contexto
+
+O FoodNow precisa proteger dados sensíveis do pedido:
+
+* valor total
+* dados do cliente
+* endereço
+
+Esses dados não devem ser alterados diretamente.
+
+---
+
+### 🧱 Exemplo
+
+```csharp
+// Dados privados
+public class OrderData {
+    public string Customer { get; }
+    public decimal Total { get; }
+    public string Address { get; }
+
+    public OrderData(string customer, decimal total, string address) {
+        Customer = customer;
+        Total = total;
+        Address = address;
+    }
+}
+
+// Classe principal
+public class Order {
+    private readonly OrderData _data;
+
+    public Order(string customer, decimal total, string address) {
+        _data = new OrderData(customer, total, address);
+    }
+
+    public string GetCustomer() => _data.Customer;
+    public decimal GetTotal() => _data.Total;
+
+    public string GetMaskedAddress() =>
+        $"*** {_data.Address[^5..]}";
+}
+```
+
+---
+
+```mermaid
+classDiagram
+    class OrderData {
+        +Customer : string
+        +Total : decimal
+        +Address : string
+    }
+
+    class Order {
+        -OrderData _data
+        +GetCustomer()
+        +GetTotal()
+        +GetMaskedAddress()
+    }
+
+    Order --> OrderData
+```
+
+👉 **Uso real**:
+
+* proteger dados do cliente
+* garantir imutabilidade
+* evitar alterações indevidas
+
+---
+
+## 🧠 Resumo
+
+| Padrão             | Uso no FoodNow                    |
+| ------------------ | --------------------------------- |
+| Adapter            | Integração com APIs externas      |
+| Bridge             | Relatórios com múltiplos formatos |
+| Composite          | Combos e pedidos compostos        |
+| Private Class Data | Proteção de dados sensíveis       |
+
+
+</details>
 
 ---
 ## Referências
