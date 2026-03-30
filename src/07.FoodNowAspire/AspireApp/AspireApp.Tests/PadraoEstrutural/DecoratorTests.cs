@@ -29,11 +29,11 @@ public class DecoratorTests
         var pedido = new PedidoBase();      
         
         // // When
-        var pedidoComQueijo = new ComMolho(pedido);    
+        var pedidoComQueijo = new ComMaionese(pedido);    
         Console.WriteLine(pedidoComQueijo.Descricao());  
    
         // // Then
         Assert.Equal(10, pedido.CalcularPreco());
-        Assert.Equal(12, pedidoComQueijo.CalcularPreco());
+        Assert.Equal(13, pedidoComQueijo.CalcularPreco());
     }
 }
