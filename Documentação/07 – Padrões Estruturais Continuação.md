@@ -343,7 +343,11 @@ classDiagram
 
 ---
 
-Aqui estão **exemplos para os padrões Decorator, Facade, Flyweight e Proxy**, todos adaptados para **o contexto de uma seguradora**, com **código em C#** e **diagramas Mermaid** para visualização.
+
+<details>
+<summary>Exemplos Seguradora</summary>
+
+**Exemplos para os padrões Decorator, Facade, Flyweight e Proxy**, todos adaptados para **o contexto de uma seguradora**, com **código em C#** e **diagramas Mermaid** para visualização.
 
 ---
 
@@ -614,6 +618,306 @@ classDiagram
     ProxyDocumento --> DocumentoReal
 ```
 
+</details>
+
+<details>
+<summary>Exemplos FoodNow</summary>
+
+---
+
+# 🎭 **Decorator – Personalização de Pedido (FoodNow)**
+
+### 🎯 Problema
+
+Adicionar extras a um pedido (queijo, bacon, bebida…) sem criar mil subclasses.
+
+---
+
+### 🏛️ **Exemplo C#**
+
+```csharp
+interface IPedido {
+    string Descricao();
+    decimal CalcularPreco();
+}
+
+class PedidoBase : IPedido {
+    public string Descricao() => "Hambúrguer";
+    public decimal CalcularPreco() => 10;
+}
+
+// Decorators
+class ComQueijo : IPedido {
+    private readonly IPedido _pedido;
+    public ComQueijo(IPedido pedido) => _pedido = pedido;
+
+    public string Descricao() => _pedido.Descricao() + " + Queijo";
+    public decimal CalcularPreco() => _pedido.CalcularPreco() + 2;
+}
+
+class ComBacon : IPedido {
+    private readonly IPedido _pedido;
+    public ComBacon(IPedido pedido) => _pedido = pedido;
+
+    public string Descricao() => _pedido.Descricao() + " + Bacon";
+    public decimal CalcularPreco() => _pedido.CalcularPreco() + 3;
+}
+```
+
+---
+
+### 📐 **Mermaid – Decorator**
+
+```mermaid
+classDiagram
+    class IPedido {
+        <<interface>>
+        +Descricao()
+        +CalcularPreco()
+    }
+
+    class PedidoBase
+    class ComQueijo
+    class ComBacon
+
+    IPedido <|.. PedidoBase
+    IPedido <|.. ComQueijo
+    IPedido <|.. ComBacon
+    ComQueijo --> IPedido
+    ComBacon --> IPedido
+```
+
+
+
+---
+
+# 🚪 **Facade – Processamento de Pedido**
+
+### 🎯 Problema
+
+Fazer um pedido envolve vários sistemas: pagamento, restaurante, entrega.
+
+---
+
+### 🏛️ **Exemplo C#**
+
+```csharp
+class PagamentoService {
+    public void Processar(decimal valor) =>
+        Console.WriteLine($"Pagamento de {valor} processado");
+}
+
+class RestauranteService {
+    public void PrepararPedido(string item) =>
+        Console.WriteLine($"Preparando {item}");
+}
+
+class EntregaService {
+    public void EnviarEntrega() =>
+        Console.WriteLine("Entrega em andamento");
+}
+
+// Facade
+class PedidoFacade {
+    private PagamentoService _pagamento = new();
+    private RestauranteService _restaurante = new();
+    private EntregaService _entrega = new();
+
+    public void FazerPedido(string item, decimal valor) {
+        _pagamento.Processar(valor);
+        _restaurante.PrepararPedido(item);
+        _entrega.EnviarEntrega();
+    }
+}
+```
+
+---
+
+### 📐 **Mermaid – Facade**
+
+```mermaid
+classDiagram
+    class PagamentoService {
+        +Processar(valor)
+    }
+
+    class RestauranteService {
+        +PrepararPedido(item)
+    }
+
+    class EntregaService {
+        +EnviarEntrega()
+    }
+
+    class PedidoFacade {
+        +FazerPedido(item, valor)
+    }
+
+    PedidoFacade --> PagamentoService
+    PedidoFacade --> RestauranteService
+    PedidoFacade --> EntregaService
+```
+
+---
+
+### 💡 Insight
+
+👉 O app do FoodNow expõe **um botão "Pedir"**, mas por trás tem vários serviços.
+
+---
+
+# 🪶 **Flyweight – Compartilhamento de Ingredientes**
+
+### 🎯 Problema
+
+Milhares de pedidos usando os mesmos ingredientes → desperdício de memória.
+
+---
+
+### 🏛️ **Exemplo C#**
+
+```csharp
+class Ingrediente {
+    public string Nome { get; }
+
+    public Ingrediente(string nome) {
+        Nome = nome;
+    }
+}
+
+class IngredienteFactory {
+    private Dictionary<string, Ingrediente> _cache = new();
+
+    public Ingrediente GetIngrediente(string nome) {
+        if (!_cache.ContainsKey(nome))
+            _cache[nome] = new Ingrediente(nome);
+
+        return _cache[nome];
+    }
+}
+
+class Pedido {
+    public string Cliente { get; }
+    public Ingrediente Ingrediente { get; }
+
+    public Pedido(string cliente, Ingrediente ingrediente) {
+        Cliente = cliente;
+        Ingrediente = ingrediente;
+    }
+
+    public void Exibir() =>
+        Console.WriteLine($"{Cliente} pediu algo com {Ingrediente.Nome}");
+}
+```
+
+---
+
+### 📐 **Mermaid – Flyweight**
+
+```mermaid
+classDiagram
+    class Ingrediente {
+        +Nome
+    }
+
+    class IngredienteFactory {
+        -cache : Dictionary~string, Ingrediente~
+        +GetIngrediente(nome)
+    }
+
+    class Pedido {
+        +Cliente
+        +Ingrediente
+    }
+
+    Pedido --> Ingrediente
+    IngredienteFactory --> Ingrediente
+```
+
+---
+
+### 💡 Insight
+
+👉 “Queijo”, “Alface”, “Pão” não precisam existir mil vezes na memória.
+
+---
+
+# 🛡️ **Proxy – Acesso ao Detalhe do Pedido**
+
+### 🎯 Problema
+
+Nem todo mundo pode ver detalhes do pedido (ex: dados do cliente).
+
+---
+
+### 🏛️ **Exemplo C#**
+
+```csharp
+interface IPedidoDetalhado {
+    void Mostrar();
+}
+
+class PedidoReal : IPedidoDetalhado {
+    private readonly string _pedidoId;
+
+    public PedidoReal(string pedidoId) {
+        _pedidoId = pedidoId;
+        Console.WriteLine($"Carregando pedido {_pedidoId}");
+    }
+
+    public void Mostrar() =>
+        Console.WriteLine($"Detalhes do pedido {_pedidoId}");
+}
+
+class ProxyPedido : IPedidoDetalhado {
+    private PedidoReal _real;
+    private readonly string _pedidoId;
+    private readonly string _usuario;
+
+    public ProxyPedido(string pedidoId, string usuario) {
+        _pedidoId = pedidoId;
+        _usuario = usuario;
+    }
+
+    public void Mostrar() {
+        if (_usuario != "admin")
+            Console.WriteLine("Acesso negado");
+        else {
+            _real ??= new PedidoReal(_pedidoId);
+            _real.Mostrar();
+        }
+    }
+}
+```
+
+---
+
+### 📐 **Mermaid – Proxy**
+
+```mermaid
+classDiagram
+    class IPedidoDetalhado {
+        <<interface>>
+        +Mostrar()
+    }
+
+    class PedidoReal {
+        +Mostrar()
+    }
+
+    class ProxyPedido {
+        -pedidoId
+        -usuario
+        +Mostrar()
+    }
+
+    IPedidoDetalhado <|.. PedidoReal
+    IPedidoDetalhado <|.. ProxyPedido
+    ProxyPedido --> PedidoReal
+```
+
+
+</details>
 
 ---
   > © MoOngy 2026 | Este repositório é parte do programa de formação contínua em Engenharia de Software.
