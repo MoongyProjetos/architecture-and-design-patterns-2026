@@ -1,4 +1,4 @@
-namespace AspireApp.Tests.PadraoEstrutural;
+namespace AspireApp.Tests.PadraoEstrutural.Composite;
 
 using AspireApp.Model.PadraoEstrutural.Composite;
 public class CompositeTests
