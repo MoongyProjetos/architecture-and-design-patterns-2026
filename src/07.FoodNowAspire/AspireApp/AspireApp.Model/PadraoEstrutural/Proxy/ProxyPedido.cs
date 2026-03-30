@@ -1,25 +1,21 @@
 namespace AspireApp.Model.PadraoEstrutural.Proxy;
 
-//Aqui utilizamos o Proxy por dois motivos: 1 - Esconder complexidade 
-//2 - Esconder/Conceder permissões apenas a quem se deve
-public class ProxyPedido : IPedidoDetalhado {
-    private PedidoReal _real;
-    private readonly string _pedidoId;
+public class ProxyPedido : IPedidoDetalhado
+{
+    private readonly IPedidoDetalhado _real;
     private readonly string _usuario;
 
-    public ProxyPedido(string pedidoId, string usuario) {
-        _pedidoId = pedidoId;
+    public ProxyPedido(IPedidoDetalhado real, string usuario)
+    {
+        _real = real;
         _usuario = usuario;
     }
 
-    public void Mostrar() {
+    public string Mostrar()
+    {
         if (_usuario != "admin")
-        {
-            Console.WriteLine("Acesso negado");
-        }            
-        else {
-            _real ??= new PedidoReal(_pedidoId);
-            _real.Mostrar();
-        }
+            return "Acesso negado";
+
+        return _real.Mostrar();
     }
 }

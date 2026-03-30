@@ -1,16 +1,16 @@
 namespace AspireApp.Model.PadraoEstrutural.Proxy;
 
 /// <summary>
-/// Essa é a classe de exemplo, com o código complexo que queremos esconder :)
+/// Classe com lógica "pesada" que o Proxy controla o acesso
 /// </summary>
-public class PedidoReal : IPedidoDetalhado {
+public class PedidoReal : IPedidoDetalhado
+{
     private readonly string _pedidoId;
 
-    public PedidoReal(string pedidoId) {
-        _pedidoId = pedidoId;
-        Console.WriteLine($"Carregando pedido {_pedidoId}");
-    }
+    public PedidoReal(string pedidoId) => _pedidoId = pedidoId;
 
-    public void Mostrar() =>
-        Console.WriteLine($"Detalhes do pedido {_pedidoId}");
+    public string Mostrar()
+    {
+        return $"Detalhes do pedido {_pedidoId}";
+    }
 }

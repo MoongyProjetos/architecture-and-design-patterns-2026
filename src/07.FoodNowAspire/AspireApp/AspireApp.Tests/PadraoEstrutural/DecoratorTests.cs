@@ -7,12 +7,12 @@ public class DecoratorTests
     public void ExemploUsoDecorator()
     {
         // Given        
-        var pedido = new PedidoBase();      
-        
+        var pedido = new PedidoBase();
+
         // When        
-        var pedidoComQueijo = new ComQueijo(pedido);      
+        var pedidoComQueijo = new ComQueijo(pedido);
         Console.WriteLine(pedido.Descricao());
-   
+
         // Then
         Assert.Equal(10, pedido.CalcularPreco());
         Assert.Equal(12, pedidoComQueijo.CalcularPreco());
@@ -26,14 +26,85 @@ public class DecoratorTests
         //Vai mostrar no Console o comportamento do Attributo, 
         // Molho, que significa mostra uma mensagem
         // Given        
-        var pedido = new PedidoBase();      
-        
+        var pedido = new PedidoBase();
+
         // // When
-        var pedidoComQueijo = new ComMaionese(pedido);    
-        Console.WriteLine(pedidoComQueijo.Descricao());  
-   
+        var pedidoComQueijo = new ComMaionese(pedido);
+        Console.WriteLine(pedidoComQueijo.Descricao());
+
         // // Then
         Assert.Equal(10, pedido.CalcularPreco());
         Assert.Equal(13, pedidoComQueijo.CalcularPreco());
+    }
+
+
+    [Fact]
+    public void PedidoBase_DeveTerPrecoBaseCorreto()
+    {
+        // Arrange
+        var pedido = new PedidoBase();
+
+        // Act
+        var preco = pedido.CalcularPreco();
+
+        // Assert
+        Assert.Equal(10, preco);
+    }
+
+    [Fact]
+    public void PedidoComQueijo_DeveAdicionarPrecoCorretamente()
+    {
+        // Arrange
+        var pedido = new PedidoBase();
+        var pedidoComQueijo = new ComQueijo(pedido);
+
+        // Act
+        var preco = pedidoComQueijo.CalcularPreco();
+
+        // Assert
+        Assert.Equal(12, preco);
+    }
+
+    [Fact]
+    public void PedidoComQueijo_DeveAtualizarDescricao()
+    {
+        // Arrange
+        var pedido = new PedidoBase();
+        var pedidoComQueijo = new ComQueijo(pedido);
+
+        // Act
+        var descricao = pedidoComQueijo.Descricao();
+
+        // Assert
+        Assert.Contains("Queijo", descricao);
+    }
+
+    [Fact]
+    public void PedidoComMaionese_DeveAdicionarPrecoCorretamente()
+    {
+        // Arrange
+        var pedido = new PedidoBase();
+        var pedidoComMaionese = new ComMaionese(pedido);
+
+        // Act
+        var preco = pedidoComMaionese.CalcularPreco();
+
+        // Assert
+        Assert.Equal(13, preco);
+    }
+
+    [Fact]
+    [Molho]
+    public void PedidoComMaionese_ComAtributoMolho_DeveExecutarSemErro()
+    {
+        // Arrange
+        var pedido = new PedidoBase();
+        var pedidoComMaionese = new ComMaionese(pedido);
+
+        // Act
+        var descricao = pedidoComMaionese.Descricao();
+
+        // Assert
+        Assert.NotNull(descricao);
     }
 }
