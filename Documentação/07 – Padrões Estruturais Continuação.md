@@ -623,6 +623,8 @@ classDiagram
 <details>
 <summary>Exemplos FoodNow</summary>
 
+**Exemplos para os padrões Decorator, Facade, Flyweight e Proxy**, todos adaptados para **o contexto do FoodNow**, com **código em C#** e **diagramas Mermaid** para visualização.
+
 ---
 
 # 🎭 **Decorator – Personalização de Pedido (FoodNow)**
