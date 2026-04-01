@@ -738,8 +738,15 @@ class Program
 ```
 
 
-</details>>
+</details>
 
+
+<details>
+<summary>Exemplos adaptados para o FoodNow</summary>
+
+TODO: Trazer exemplos
+
+</details>
 ---
 
 ## ✅ Conclusão
