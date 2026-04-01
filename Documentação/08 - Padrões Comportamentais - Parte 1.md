@@ -491,8 +491,10 @@ Excelente! Vamos adaptar os padrões **Observer**, **Strategy** e **Command** pa
 
 ---
 
+<details>
+<summary>
 ## 🔷 Exemplos de Padrões para o Domínio de Seguradora (em C#)
-
+</summary>
 ---
 
 ### 🔹 1. **Observer** – *Notificar clientes sobre mudanças na apólice*
@@ -734,6 +736,303 @@ class Program
     }
 }
 ```
+
+</summary>
+
+<details>
+<summary> Exemplos FoodNow</summary>
+
+---
+
+# 🍔 Contexto FoodNow
+
+Sistema de delivery com fluxo:
+
+```
+Cliente → Pedido → Pagamento → Entrega
+```
+
+Problemas que queremos resolver:
+
+* fluxo complexo
+* baixo acoplamento
+* extensibilidade
+
+---
+
+# 1️⃣ Chain of Responsibility — Validação de Pedido
+
+## 🧠 Ideia
+
+Pipeline de validação:
+
+* estoque
+* pagamento
+* endereço
+
+## 📊 Diagrama
+
+```
+Pedido
+  ↓
+[ValidadorEstoque]
+  ↓
+[ValidadorPagamento]
+  ↓
+[ValidadorEndereco]
+  ↓
+Pedido aprovado
+```
+
+---
+
+## 💻 C#
+
+```csharp
+abstract class ValidadorPedido
+{
+    protected ValidadorPedido Proximo;
+
+    public void SetProximo(ValidadorPedido proximo)
+        => Proximo = proximo;
+
+    public virtual bool Validar(Pedido pedido)
+    {
+        if (Proximo != null)
+            return Proximo.Validar(pedido);
+
+        return true;
+    }
+}
+
+class ValidadorEstoque : ValidadorPedido
+{
+    public override bool Validar(Pedido pedido)
+    {
+        if (!pedido.ItensDisponiveis)
+            return false;
+
+        return base.Validar(pedido);
+    }
+}
+```
+
+---
+
+## 🎯 Quando usar
+
+* substituir `if/else` gigante
+* pipeline de regras
+
+---
+
+# 2️⃣ Command — Ações do Pedido
+
+## 🧠 Ideia
+
+Cada ação vira um objeto
+
+## 📊 Diagrama
+
+```
+[Invoker]
+   ↓
+[Command]
+   ↓
+[Handler]
+```
+
+---
+
+## 💻 C#
+
+```csharp
+interface ICommand
+{
+    void Executar();
+}
+
+class CriarPedidoCommand : ICommand
+{
+    private readonly PedidoService _service;
+
+    public CriarPedidoCommand(PedidoService service)
+    {
+        _service = service;
+    }
+
+    public void Executar()
+    {
+        _service.CriarPedido();
+    }
+}
+```
+
+---
+
+## 🎯 Uso real
+
+* filas (Azure Queue 👀)
+* retry
+* logging
+
+---
+
+# 3️⃣ Iterator — Lista de Pedidos
+
+## 🧠 Ideia
+
+Percorrer sem expor estrutura
+
+## 📊 Diagrama
+
+```
+[PedidoCollection] → Iterator → foreach
+```
+
+---
+
+## 💻 C#
+
+```csharp
+class PedidoCollection : IEnumerable<Pedido>
+{
+    private List<Pedido> _pedidos = new();
+
+    public void Add(Pedido pedido)
+        => _pedidos.Add(pedido);
+
+    public IEnumerator<Pedido> GetEnumerator()
+        => _pedidos.GetEnumerator();
+
+    IEnumerator IEnumerable.GetEnumerator()
+        => GetEnumerator();
+}
+```
+
+---
+
+## 🎯 Ganho
+
+* desacopla estrutura de dados
+
+---
+
+# 4️⃣ Mediator — Orquestração do Pedido
+
+## 🧠 Ideia
+
+Evitar caos entre serviços
+
+## 📊 Diagrama
+
+```
+Cliente
+   ↓
+[PedidoMediator]
+   ↓      ↓       ↓
+Pagamento Estoque Entrega
+```
+
+---
+
+## 💻 C#
+
+```csharp
+interface IMediator
+{
+    void ProcessarPedido(Pedido pedido);
+}
+
+class PedidoMediator : IMediator
+{
+    private readonly PagamentoService _pagamento;
+    private readonly EstoqueService _estoque;
+    private readonly EntregaService _entrega;
+
+    public PedidoMediator(
+        PagamentoService pagamento,
+        EstoqueService estoque,
+        EntregaService entrega)
+    {
+        _pagamento = pagamento;
+        _estoque = estoque;
+        _entrega = entrega;
+    }
+
+    public void ProcessarPedido(Pedido pedido)
+    {
+        _estoque.Reservar(pedido);
+        _pagamento.Processar(pedido);
+        _entrega.Agendar(pedido);
+    }
+}
+```
+
+---
+
+## 🎯 Insight arquitetural
+
+👉 Isso aqui é basicamente:
+
+* Orquestração
+* Pode virar:
+
+  * Azure Durable Functions
+  * Saga pattern
+
+---
+
+# 5️⃣ Memento — Histórico de Pedido
+
+## 🧠 Ideia
+
+Salvar estado anterior
+
+## 📊 Diagrama
+
+```
+Pedido → Memento → Histórico
+```
+
+---
+
+## 💻 C#
+
+```csharp
+class PedidoMemento
+{
+    public string Estado { get; }
+
+    public PedidoMemento(string estado)
+    {
+        Estado = estado;
+    }
+}
+
+class Pedido
+{
+    public string Estado { get; private set; }
+
+    public PedidoMemento SalvarEstado()
+        => new PedidoMemento(Estado);
+
+    public void Restaurar(PedidoMemento memento)
+        => Estado = memento.Estado;
+}
+```
+
+---
+
+## 🎯 Uso real
+
+* rollback
+* auditoria
+
+---
+
+</details>
+
 
 ---
 
