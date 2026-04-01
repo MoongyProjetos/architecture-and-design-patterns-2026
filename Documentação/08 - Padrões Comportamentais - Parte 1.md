@@ -737,7 +737,8 @@ class Program
 }
 ```
 
-</summary>
+
+</details>>
 
 <details>
 <summary> Exemplos FoodNow</summary>
