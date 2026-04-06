@@ -1,6 +1,6 @@
 # 🧑‍🏫 Aula 9 – Padrões Comportamentais (Parte 2)
 
-📅 Data: 09/07/2025
+📅 Data: 06/04/2026
 ⏱ Duração: 2h
 
 🎯 **Objetivo:** Compreender e aplicar os padrões comportamentais:
