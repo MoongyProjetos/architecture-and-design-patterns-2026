@@ -1,6 +1,6 @@
 ### 📘 **Sessão 11 – Padrões Arquiteturais em Sistemas Modernos**
 
-📅 **Data:** 16/07/2025
+📅 **Data:** 15/04/2026
 ⏱ **Duração:** 2 horas
 🎯 **Objetivo da Sessão:**
 Compreender os princípios e aplicações práticas dos principais padrões arquiteturais modernos: **Domain-Driven Design (DDD)**, **Arquitetura em Camadas**, e **Arquitetura de Microsserviços**, com foco em suas vantagens, limitações e quando utilizá-los.
@@ -18,6 +18,178 @@ Compreender os princípios e aplicações práticas dos principais padrões arqu
 | **5. Comparativo e Integração dos Padrões**          | Como os 3 padrões podem coexistir (ex: DDD aplicado em microsserviços com arquitetura em camadas) | Apresentação de um diagrama integrador + estudo de um cenário real         | Participação em grupo + perguntas abertas                                       | 15 min    |
 | **6. Conclusão e Encerramento**                      | Recapitulação + leitura complementar e desafios                                                   | Gamificação (Kahoot ou Mentimeter)                                         | Feedback rápido da sessão + QR code para material complementar                  | 15 min    |
 
+
+---
+
+# 🌳 Decision Tree – Escolha de Design Patterns (GoF)
+
+![alt text](image.png)
+
+## 🧭 PASSO 1 — Qual é o problema principal?
+
+```
+👉 Você está lidando com:
+A) Criação de objetos?
+B) Estrutura/organização?
+C) Comportamento/interação?
+```
+
+---
+
+# 🏗️ A) CREATIONAL
+
+## 👉 Precisa controlar como objetos são criados?
+
+```
+→ Só pode existir UMA instância?
+   ✅ Singleton
+
+→ Precisa CLONAR objetos existentes?
+   ✅ Prototype
+
+→ Criação é complexa (muitos passos)?
+   ✅ Builder
+
+→ Quer delegar criação para subclasses?
+   ✅ Factory Method
+
+→ Precisa criar famílias de objetos relacionados?
+   ✅ Abstract Factory
+```
+
+💡 **Resumo mental rápido:**
+
+* complexidade → Builder
+* variação → Factory
+* famílias → Abstract Factory
+* instância única → Singleton
+* cópia → Prototype
+
+---
+
+# 🧱 B) STRUCTURAL
+
+## 👉 Problema é organizar ou integrar classes?
+
+```
+→ Interfaces incompatíveis?
+   ✅ Adapter
+
+→ Quer simplificar um sistema complexo?
+   ✅ Facade
+
+→ Precisa adicionar comportamento sem alterar classe?
+   ✅ Decorator
+
+→ Estrutura em árvore (parte-todo)?
+   ✅ Composite
+
+→ Separar abstração da implementação?
+   ✅ Bridge
+
+→ Quer controlar acesso ao objeto?
+   → Controle simples?
+       ✅ Proxy
+
+→ Precisa economizar memória com muitos objetos?
+   ✅ Flyweight
+```
+
+💡 **Resumo mental:**
+
+* integrar → Adapter
+* simplificar → Facade
+* estender → Decorator
+* hierarquia → Composite
+* desacoplar → Bridge
+* controlar acesso → Proxy
+* otimizar memória → Flyweight
+
+---
+
+# 🔄 C) BEHAVIORAL
+
+## 👉 Problema é comunicação ou comportamento?
+
+```
+→ Quer notificar múltiplos interessados automaticamente?
+   ✅ Observer
+
+→ Quer trocar algoritmo em runtime?
+   ✅ Strategy
+
+→ Quer encapsular uma ação/comando?
+   ✅ Command
+
+→ Comportamento muda com estado interno?
+   ✅ State
+
+→ Passar requisição por uma cadeia?
+   ✅ Chain of Responsibility
+
+→ Centralizar comunicação entre objetos?
+   ✅ Mediator
+
+→ Precisa salvar/restaurar estado?
+   ✅ Memento
+
+→ Quer definir esqueleto de algoritmo com variações?
+   ✅ Template Method
+
+→ Precisa percorrer coleção sem expor estrutura?
+   ✅ Iterator
+
+→ Quer adicionar comportamento sem modificar classes?
+   ✅ Visitor
+```
+
+💡 **Resumo mental:**
+
+* eventos → Observer
+* algoritmos → Strategy
+* ações → Command
+* estado → State
+* pipeline → Chain
+* orquestração → Mediator
+* histórico → Memento
+* template → Template Method
+* coleção → Iterator
+* extensão sem tocar código → Visitor
+
+---
+
+# 🧠 SUPER RESUMO 
+
+```
+CRIAÇÃO → como nasce?
+ESTRUTURA → como organiza?
+COMPORTAMENTO → como interage?
+```
+
+---
+
+# 💥 Versão "FoodNow" (pra dar aquele brilho)
+
+* Pedido muda status → **State**
+* Notificação ao cliente → **Observer**
+* Cálculo de frete → **Strategy**
+* Integração com gateway → **Adapter + Facade**
+* Criação de pedido complexo → **Builder**
+* Pipeline de validação → **Chain of Responsibility**
+
+---
+
+# ⚠️ Dica de arquiteto (essa aqui vale ouro)
+
+Essa árvore **não é linear na vida real**. Às vezes:
+
+* você começa com **Strategy**
+* percebe acoplamento → entra **Factory**
+* depois simplifica → adiciona **Facade**
+
+👉 **Patterns são combináveis**, não exclusivos.
+
+
 ---
 
 ## 📎 Material Complementar
@@ -33,6 +205,9 @@ Compreender os princípios e aplicações práticas dos principais padrões arqu
 
 
 ![alt text](image.png)
+
+
+
 
 
 ---
