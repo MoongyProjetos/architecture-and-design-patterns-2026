@@ -10,7 +10,7 @@ Compreender os princípios e aplicações práticas dos principais padrões arqu
 
 # 🌳 Decision Tree – Escolha de Design Patterns (GoF)
 
-![alt text](image.png)
+![alt text](Imagens/decision.png)
 
 ## 🧭 PASSO 1 — Qual é o problema principal?
 
