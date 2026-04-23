@@ -1,5 +1,5 @@
 > **Sessão 15 – Padrões de Observabilidade, Consistência e Manutenibilidade**
-> 📅 **Data:** 27/04/2026
+> 📅 **Data:** 29/04/2026
 > ⏱️ **Duração:** 2h
 
 ---

@@ -1,6 +1,6 @@
 # 🔹 **Sessão 14 – Padrões para Resiliência e Alta Disponibilidade**
 
-📅 Data: 23/04/2026
+📅 Data: 27/04/2026
 🕑 Duração: 2h
 🎯 Objetivo: Capacitar os participantes a projetar aplicações tolerantes a falhas, resilientes e com alta disponibilidade, utilizando padrões reconhecidos e recursos do Azure.
 
