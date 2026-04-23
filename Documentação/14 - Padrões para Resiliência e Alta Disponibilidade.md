@@ -4,7 +4,7 @@
 🕑 Duração: 2h
 🎯 Objetivo: Capacitar os participantes a projetar aplicações tolerantes a falhas, resilientes e com alta disponibilidade, utilizando padrões reconhecidos e recursos do Azure.
 
----
+------
 
 ## 🧩 **1. Padrões para Tolerância a Falhas** (45 minutos)
 

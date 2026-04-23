@@ -2,7 +2,7 @@
 > 📅 **Data:** 29/04/2026
 > ⏱️ **Duração:** 2h
 
----
+------
 
 ## 🧭 Estrutura Geral da Aula
 
