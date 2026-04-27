@@ -1,6 +1,6 @@
 ## 🎓 Sessão 13 – Padrões para Escalabilidade e Performance
 
-📅 **Data:** 23/07/2025
+📅 **Data:** 21/04/2026
 ⏱️ **Duração:** 2h
 
 ---

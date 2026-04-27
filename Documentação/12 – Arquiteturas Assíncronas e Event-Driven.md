@@ -1,6 +1,6 @@
 # 🧠 Aula: Arquiteturas Assíncronas e Event-Driven
 
-📅 **Data**: 21/07/2025
+📅 **Data**: 20/04/2026
 ⏱️ **Duração**: 2 horas
 🎯 **Público-alvo**: Desenvolvedores, arquitetos de software, estudantes avançados
 📌 **Objetivo**: Compreender os conceitos, padrões e práticas de arquiteturas baseadas em eventos e assíncronas, com foco em **escalabilidade**, **resiliência** e **casos aplicados a seguradoras**.
@@ -155,6 +155,7 @@
 
 
 https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven
+https://learn.microsoft.com/en-us/azure/architecture/patterns/
 
 
 
