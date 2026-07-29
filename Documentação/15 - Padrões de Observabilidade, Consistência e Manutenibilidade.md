@@ -176,6 +176,7 @@ Log.Logger = new LoggerConfiguration()
 ```
 
 ---
+Exemplo com Grafana, Prometheus e OpenTelemetry: (https://learn.microsoft.com/en-us/dotnet/core/diagnostics/observability-prgrja-example)
 
 ### 📊 **Telemetry com Application Insights**
 
